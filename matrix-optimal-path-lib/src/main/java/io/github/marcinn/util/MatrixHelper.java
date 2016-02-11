@@ -1,7 +1,7 @@
 package io.github.marcinn.util;
 
-import io.github.marcinn.Cell;
-import io.github.marcinn.MatrixInfo;
+import io.github.marcinn.model.Cell;
+import io.github.marcinn.model.MatrixInfo;
 
 public class MatrixHelper {
 

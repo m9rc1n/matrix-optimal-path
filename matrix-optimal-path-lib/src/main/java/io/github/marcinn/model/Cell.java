@@ -1,4 +1,4 @@
-package io.github.marcinn;
+package io.github.marcinn.model;
 
 import java.util.ArrayList;
 

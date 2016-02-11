@@ -1,4 +1,4 @@
-package io.github.marcinn;
+package io.github.marcinn.model;
 
 import org.junit.Test;
 

@@ -3,7 +3,7 @@ package io.github.marcinn.strategy;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
-import io.github.marcinn.Cell;
+import io.github.marcinn.model.Cell;
 
 public class Dijkstra implements Strategy {
 

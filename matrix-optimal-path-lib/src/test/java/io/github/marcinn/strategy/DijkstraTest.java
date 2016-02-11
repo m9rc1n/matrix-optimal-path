@@ -8,7 +8,7 @@ import org.junit.runners.Parameterized;
 import java.util.Arrays;
 import java.util.Collection;
 
-import io.github.marcinn.Cell;
+import io.github.marcinn.model.Cell;
 import io.github.marcinn.util.MatrixHelper;
 
 import static org.junit.Assert.assertEquals;
