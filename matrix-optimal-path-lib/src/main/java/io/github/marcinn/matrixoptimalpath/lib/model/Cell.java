@@ -88,4 +88,8 @@ public class Cell implements Comparable<Cell> {
     public ArrayList<Integer> getNeighbours() {
         return neighbours;
     }
+
+    public int getIndex() {
+        return index;
+    }
 }
