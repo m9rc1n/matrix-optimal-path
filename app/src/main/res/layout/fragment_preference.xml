@@ -46,7 +46,7 @@
             app:dsb_progressColor="@color/colorPrimary"
             app:dsb_trackColor="@color/colorAccent"
             app:dsb_trackHeight="2dp"
-            app:dsb_value="6"/>
+            app:dsb_value="1"/>
 
         <ImageButton
             android:id="@+id/imageButton"

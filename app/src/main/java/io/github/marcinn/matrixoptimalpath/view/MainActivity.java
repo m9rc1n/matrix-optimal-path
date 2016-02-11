@@ -65,7 +65,6 @@ public class MainActivity extends AppCompatActivity
                 item.setIcon(R.drawable.ic_grid_on_white_48dp);
                 mToolbar.setTitle("Preferences");
             } else {
-                hideKeyboard();
                 showPreferenceFragment();
                 item.setIcon(R.drawable.ic_settings_white_48dp);
                 mToolbar.setTitle(R.string.app_name);
@@ -80,6 +79,7 @@ public class MainActivity extends AppCompatActivity
                 .setCustomAnimations(R.anim.slide_in_top, R.anim.slide_out_bottom)
                 .show(mPreferenceFragment)
                 .commit();
+        hideKeyboard();
     }
 
     private void showPreferenceFragment() {
@@ -99,7 +99,17 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onPreferenceChanged(String text, int columnNumber) {
+        if (text.equals("")) {
+            Snackbar.make(mRootView, "No words to display", Snackbar.LENGTH_SHORT).show();
+            return;
+        }
         String[] words = text.toLowerCase().split("\\s+");
+        if (columnNumber > words.length) {
+            Snackbar.make(mRootView,
+                    "Nr of columns should not be bigger than words number",
+                    Snackbar.LENGTH_SHORT).show();
+            return;
+        }
         Cell[] cells = new MatrixHelper().generateMatrixFromString(words, columnNumber);
         cells = new MatrixOptimalPath(new Dijkstra()).execute(cells);
         WordCell[] resultCells = new WordCell[cells.length];
