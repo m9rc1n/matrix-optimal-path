@@ -28,6 +28,15 @@ public class WordCell implements Parcelable {
     }
 
     @Override
+    public String toString() {
+        if (cost == Integer.MAX_VALUE) {
+            return String.format("%s\n(\u221E)", text);
+        } else {
+            return String.format("%s\n(%d)", text, cost);
+        }
+    }
+
+    @Override
     public int describeContents() {
         return 0;
     }

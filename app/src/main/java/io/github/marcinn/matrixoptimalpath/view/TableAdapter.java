@@ -34,10 +34,7 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        WordCell wordCell = mDataset[position];
-        holder.mTextView.setText(wordCell.getText());
-        holder.cost.setText(String.format("%d", wordCell.getCost()));
-        if (wordCell.getCost() == Integer.MAX_VALUE) holder.cost.setText("\u221E");
+        holder.text.setText(mDataset[position].toString());
         holder.layout.setSelected(mPath.get(position, false));
     }
 
@@ -47,14 +44,12 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ViewHolder> 
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView mTextView;
-        public TextView cost;
+        public TextView text;
         public FrameLayout layout;
 
         public ViewHolder(View v) {
             super(v);
-            mTextView = (TextView) v.findViewById(R.id.text);
-            cost = (TextView) v.findViewById(R.id.cost);
+            text = (TextView) v.findViewById(R.id.text);
             layout = (FrameLayout) v.findViewById(R.id.cell);
         }
     }

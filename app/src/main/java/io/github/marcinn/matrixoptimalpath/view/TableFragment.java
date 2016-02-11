@@ -9,6 +9,7 @@ import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import io.github.marcinn.matrixoptimalpath.R;
 import io.github.marcinn.matrixoptimalpath.model.WordCell;
@@ -18,6 +19,7 @@ public class TableFragment extends Fragment {
     private GridLayoutManager mLayoutManager;
     private TableAdapter mAdapter;
     private OnFragmentInteractionListener mListener;
+    private TextView mTextView;
 
     public TableFragment() {
     }
@@ -29,7 +31,10 @@ public class TableFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle state) {
         View view = inflater.inflate(R.layout.fragment_table, container, false);
+
         mRecyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
+        mTextView = (TextView) view.findViewById(R.id.textViewStatistics);
+
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new GridLayoutManager(getContext(), 1);
         mLayoutManager.setSmoothScrollbarEnabled(true);
@@ -59,6 +64,9 @@ public class TableFragment extends Fragment {
     public void updateAdapter(WordCell[] data, SparseBooleanArray path, int columnNumber) {
         mAdapter.setDataset(data, path);
         mLayoutManager.setSpanCount(columnNumber);
+        mTextView.setText(String.format("Words in matrix: %d \nCost of optimal path: %d",
+                data.length,
+                data[data.length - 1].getCost()));
 
     }
 

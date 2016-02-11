@@ -19,73 +19,55 @@
                     android:orientation="vertical"
                     android:padding="8dp">
 
+        <EditText
+            android:id="@+id/editText2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/imageButton"
+            android:layout_gravity="center_horizontal|top"
+            android:background="@android:color/background_light"
+            android:elegantTextHeight="true"
+            android:hint="Enter text to display in table"
+            android:inputType="textMultiLine"
+            android:padding="16dp"/>
+
         <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar
             android:id="@+id/seekBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView2"
-            android:layout_gravity="center_horizontal|top"
-            android:layout_toLeftOf="@+id/textView3"
-            android:layout_toStartOf="@+id/textView3"
-            android:paddingLeft="16dp"
+            android:layout_toLeftOf="@+id/imageButton"
+            android:layout_toStartOf="@+id/imageButton"
             app:dsb_indicatorColor="@color/colorAccent"
-            app:dsb_max="20"
+            app:dsb_max="30"
             app:dsb_min="1"
             app:dsb_progressColor="@color/colorPrimary"
             app:dsb_trackColor="@color/colorAccent"
             app:dsb_trackHeight="2dp"
             app:dsb_value="6"/>
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/view"
-            android:layout_width="match_parent"
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/seekBar"
-            android:background="@android:color/background_light"
-            android:padding="16dp">
-
-            <EditText
-                android:id="@+id/editText2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/seekBar"
-                android:layout_gravity="center_horizontal|top"
-                android:elegantTextHeight="true"
-                android:hint="Enter text to display in table"
-                android:inputType="textMultiLine"/>
-        </android.support.design.widget.TextInputLayout>
+            android:layout_alignEnd="@+id/editText2"
+            android:layout_alignParentTop="true"
+            android:layout_alignRight="@+id/editText2"
+            android:src="@drawable/ic_note_add_black_48dp"/>
 
         <TextView
             android:id="@+id/textView2"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/seekBar"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignStart="@+id/seekBar"
-            android:layout_toStartOf="@+id/textView3"
-            android:paddingLeft="16dp"
-            android:text="Columns number"
-            android:textColor="@color/colorAccent"
-            android:textSize="12sp"/>
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
+            android:layout_gravity="left|center_vertical"
+            android:layout_toLeftOf="@+id/imageButton"
+            android:layout_toStartOf="@+id/imageButton"
             android:gravity="center"
-            android:minWidth="50dp"
-            android:text="20"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textSize="28sp"/>
-
+            android:paddingLeft="16dp"
+            android:text="Columns number"/>
 
     </RelativeLayout>
 </RelativeLayout>

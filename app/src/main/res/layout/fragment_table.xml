@@ -1,17 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             tools:context="io.github.marcinn.matrixoptimalpath.TableFragment"
-             tools:showIn="@layout/activity_main">
+                tools:context="io.github.marcinn.matrixoptimalpath.TableFragment">
+
+    <TextView
+        android:id="@+id/textViewStatistics"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="Statistics"
+        android:textSize="14sp"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/my_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textViewStatistics"
+        android:layout_marginTop="4dp"
         android:drawingCacheQuality="high"
         android:padding="8dp"
         android:scrollbars="vertical"/>
 
-</FrameLayout>
+</RelativeLayout>
