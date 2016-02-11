@@ -40,7 +40,8 @@ public class DijkstraTest {
     @Test
     public void testMatrixInfoGenerationIsCorrect() throws Exception {
         MatrixHelper helper = new MatrixHelper();
-        Cell[] matrix = helper.generateMatrixFromString(text, columnNumber);
+        Cell[] matrix = helper.generateMatrixFromString(text.toLowerCase().split("\\s+"),
+                columnNumber);
         Cell[] computedMatrix = strategy.execute(matrix);
         assertEquals(cost, computedMatrix[computedMatrix.length - 1].getCost());
     }
