@@ -1,7 +1,7 @@
-package io.github.marcinn.util;
+package io.github.marcinn.matrixoptimalpath.lib.util;
 
-import io.github.marcinn.model.Cell;
-import io.github.marcinn.model.MatrixInfo;
+import io.github.marcinn.matrixoptimalpath.lib.model.Cell;
+import io.github.marcinn.matrixoptimalpath.lib.model.MatrixInfo;
 
 public class MatrixHelper {
 

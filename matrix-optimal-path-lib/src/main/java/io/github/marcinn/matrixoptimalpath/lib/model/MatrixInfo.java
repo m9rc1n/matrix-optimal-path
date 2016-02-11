@@ -1,4 +1,4 @@
-package io.github.marcinn.model;
+package io.github.marcinn.matrixoptimalpath.lib.model;
 
 public class MatrixInfo {
 

@@ -1,4 +1,4 @@
-package io.github.marcinn.model;
+package io.github.marcinn.matrixoptimalpath.lib.model;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

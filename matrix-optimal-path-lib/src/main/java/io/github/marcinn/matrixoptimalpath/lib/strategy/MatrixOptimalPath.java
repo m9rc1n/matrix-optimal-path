@@ -1,6 +1,6 @@
-package io.github.marcinn.strategy;
+package io.github.marcinn.matrixoptimalpath.lib.strategy;
 
-import io.github.marcinn.model.Cell;
+import io.github.marcinn.matrixoptimalpath.lib.model.Cell;
 
 public class MatrixOptimalPath {
 

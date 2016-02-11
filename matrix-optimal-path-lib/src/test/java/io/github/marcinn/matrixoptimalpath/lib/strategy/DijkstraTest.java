@@ -1,4 +1,4 @@
-package io.github.marcinn.strategy;
+package io.github.marcinn.matrixoptimalpath.lib.strategy;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -8,8 +8,8 @@ import org.junit.runners.Parameterized;
 import java.util.Arrays;
 import java.util.Collection;
 
-import io.github.marcinn.model.Cell;
-import io.github.marcinn.util.MatrixHelper;
+import io.github.marcinn.matrixoptimalpath.lib.model.Cell;
+import io.github.marcinn.matrixoptimalpath.lib.util.MatrixHelper;
 
 import static org.junit.Assert.assertEquals;
 
