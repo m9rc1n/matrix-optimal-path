@@ -23,4 +23,9 @@ public class CellOperationTest {
         a.setPrevious(b);
         assertTrue(a.getPrevious().equals(b));
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testIndexBiggerThanLength() {
+        Cell a = new Cell(0, 20, new MatrixInfo(10, 5));
+    }
 }

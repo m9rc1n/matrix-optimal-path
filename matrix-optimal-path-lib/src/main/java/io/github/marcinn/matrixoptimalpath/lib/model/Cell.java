@@ -13,6 +13,9 @@ public class Cell implements Comparable<Cell> {
     private Cell previous;
 
     public Cell(int value, int index, MatrixInfo info) {
+        if (index >= info.getLength()) {
+            throw new IllegalArgumentException("Index should not be bigger that matrix size");
+        }
         this.value = value;
         this.cost = Integer.MAX_VALUE;
         this.index = index;
