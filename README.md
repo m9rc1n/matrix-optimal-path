@@ -1,0 +1,1 @@
+[![Build Status](https://travis-ci.org/marc-inn/matrix-optimal-path.svg?branch=master)](https://travis-ci.org/marc-inn/matrix-optimal-path)
