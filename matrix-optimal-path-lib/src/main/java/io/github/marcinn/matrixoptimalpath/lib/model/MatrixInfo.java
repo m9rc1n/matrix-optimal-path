@@ -8,8 +8,10 @@ public class MatrixInfo {
     private final int length;
 
     public MatrixInfo(int length, int columnNumber) {
-        if (length <= 0) throw new RuntimeException("Matrix should has length bigger than 0");
-        if (columnNumber <= 0) throw new RuntimeException("Column number should be bigger than 0");
+        if (length <= 0)
+            throw new IllegalArgumentException("Matrix should has length bigger than 0");
+        if (columnNumber <= 0)
+            throw new IllegalArgumentException("Column number should be bigger than 0");
         this.columnNumber = columnNumber;
         this.length = length;
         this.rowNumber = (int) Math.ceil((double) length / columnNumber);

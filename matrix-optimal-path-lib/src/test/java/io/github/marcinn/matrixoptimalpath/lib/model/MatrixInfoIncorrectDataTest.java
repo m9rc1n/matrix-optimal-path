@@ -23,7 +23,7 @@ public class MatrixInfoIncorrectDataTest {
         return Arrays.asList(new Object[][]{{-1, -1}, {0, 1}, {0, 0}, {-1, 1}, {1, -1}, {1, 0}});
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testMatrixInfoGenerationIncorrectParameters() throws Exception {
         new MatrixInfo(length, columnNumber);
     }
