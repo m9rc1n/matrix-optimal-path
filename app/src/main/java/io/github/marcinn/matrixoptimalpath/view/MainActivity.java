@@ -56,8 +56,23 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            getSupportFragmentManager().beginTransaction().show(mPreferenceFragment).commit();
+        if (id == R.id.action_preference) {
+            item.setChecked(!item.isChecked());
+            if (item.isChecked()) {
+                getSupportFragmentManager().beginTransaction()
+                        .setCustomAnimations(R.anim.slide_in_top, R.anim.slide_out_bottom)
+                        .show(mPreferenceFragment)
+                        .commit();
+                item.setIcon(R.drawable.ic_grid_on_white_48dp);
+                mToolbar.setTitle("Preferences");
+            } else {
+                getSupportFragmentManager().beginTransaction()
+                        .setCustomAnimations(R.anim.slide_in_bottom, R.anim.slide_out_top)
+                        .hide(mPreferenceFragment)
+                        .commit();
+                item.setIcon(R.drawable.ic_settings_white_48dp);
+                mToolbar.setTitle(R.string.app_name);
+            }
             return true;
         }
         return super.onOptionsItemSelected(item);
