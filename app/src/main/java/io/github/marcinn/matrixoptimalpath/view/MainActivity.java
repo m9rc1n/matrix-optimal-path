@@ -1,5 +1,6 @@
 package io.github.marcinn.matrixoptimalpath.view;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +9,7 @@ import android.util.SparseBooleanArray;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import io.github.marcinn.matrixoptimalpath.R;
 import io.github.marcinn.matrixoptimalpath.lib.model.Cell;
@@ -59,23 +61,40 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.action_preference) {
             item.setChecked(!item.isChecked());
             if (item.isChecked()) {
-                getSupportFragmentManager().beginTransaction()
-                        .setCustomAnimations(R.anim.slide_in_top, R.anim.slide_out_bottom)
-                        .show(mPreferenceFragment)
-                        .commit();
+                hidePreferenceFragment();
                 item.setIcon(R.drawable.ic_grid_on_white_48dp);
                 mToolbar.setTitle("Preferences");
             } else {
-                getSupportFragmentManager().beginTransaction()
-                        .setCustomAnimations(R.anim.slide_in_bottom, R.anim.slide_out_top)
-                        .hide(mPreferenceFragment)
-                        .commit();
+                hideKeyboard();
+                showPreferenceFragment();
                 item.setIcon(R.drawable.ic_settings_white_48dp);
                 mToolbar.setTitle(R.string.app_name);
             }
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void hidePreferenceFragment() {
+        getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(R.anim.slide_in_top, R.anim.slide_out_bottom)
+                .show(mPreferenceFragment)
+                .commit();
+    }
+
+    private void showPreferenceFragment() {
+        getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(R.anim.slide_in_bottom, R.anim.slide_out_top)
+                .hide(mPreferenceFragment)
+                .commit();
+    }
+
+    private void hideKeyboard() {
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 
     @Override
