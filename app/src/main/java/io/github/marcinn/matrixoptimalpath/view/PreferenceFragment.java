@@ -36,7 +36,7 @@ public class PreferenceFragment extends Fragment {
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editText.append(getResources().getString(R.string.pan_tadeusz));
+                editText.append(getResources().getString(R.string.lorem_ipsum_1000));
             }
         });
 

@@ -113,7 +113,13 @@ public class MainActivity extends AppCompatActivity
             Snackbar.make(mRootView, R.string.no_words_to_display, Snackbar.LENGTH_SHORT).show();
             return;
         }
-        String[] words = text.replaceAll("[^a-zA-Z ]", "").toLowerCase().split("\\s+");
+        String[] words = text.replaceAll("[^a-zA-Z ]", "").toLowerCase().trim().split("\\s+");
+        if (words.length == 0 || (words.length == 1 && (words[0] == null || words[0].equals("")))) {
+            Snackbar.make(mRootView,
+                    R.string.please_enter_only_ascii_letters,
+                    Snackbar.LENGTH_SHORT).show();
+            return;
+        }
         Cell[] cells = new MatrixHelper().generateMatrixFromString(words, columnNumber);
         cells = new MatrixOptimalPath(new Dijkstra()).execute(cells);
         WordCell[] resultCells = new WordCell[cells.length];
