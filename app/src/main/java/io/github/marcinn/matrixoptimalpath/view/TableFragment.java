@@ -72,9 +72,9 @@ public class TableFragment extends Fragment {
 
     public void moveListToPosition(int action) {
         if (action == R.id.action_up_list) {
-            mRecyclerView.scrollToPosition(0);
+            mLayoutManager.scrollToPosition(0);
         } else if (action == R.id.action_down_list) {
-            mRecyclerView.scrollToPosition(mAdapter.getItemCount() - 1);
+            mLayoutManager.scrollToPositionWithOffset(mAdapter.getItemCount() - 1, 100);
         }
     }
 
