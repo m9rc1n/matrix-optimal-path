@@ -149,7 +149,6 @@ public class ApplicationTest {
     private void checkPreferenceFragmentMatching(ViewAssertion matches) throws Exception {
         onView(withId(R.id.editText_inputTable)).check(matches);
         onView(withId(R.id.seekBar_columnsNumber)).check(matches);
-        onView(withId(R.id.textView_columnsNumber)).check(matches);
     }
 
     private void checkTableFragmentMatching(ViewAssertion matches) throws Exception {
