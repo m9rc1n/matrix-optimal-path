@@ -70,6 +70,16 @@ public class MainActivity extends AppCompatActivity
                 mToolbar.setTitle(R.string.app_name);
             }
             return true;
+        } else if (id == R.id.action_up_list) {
+            if (mTableFragment != null) {
+                mTableFragment.moveListToPosition(R.id.action_up_list);
+            }
+            return true;
+        } else if (id == R.id.action_down_list) {
+            if (mTableFragment != null) {
+                mTableFragment.moveListToPosition(R.id.action_down_list);
+            }
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

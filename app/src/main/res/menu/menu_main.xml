@@ -2,6 +2,23 @@
       xmlns:app="http://schemas.android.com/apk/res-auto"
       xmlns:tools="http://schemas.android.com/tools"
       tools:context=".view.MainActivity">
+
+    <item
+        android:id="@+id/action_up_list"
+        android:checkable="true"
+        android:icon="@drawable/ic_arrow_upward_white_48dp"
+        android:orderInCategory="98"
+        android:title="@string/move_to_top_of_the_list"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/action_down_list"
+        android:checkable="true"
+        android:icon="@drawable/ic_arrow_downward_white_48dp"
+        android:orderInCategory="99"
+        android:title="@string/move_to_bottom_of_the_list"
+        app:showAsAction="ifRoom"/>
+
     <item
         android:id="@+id/action_preference"
         android:checkable="true"
@@ -9,4 +26,5 @@
         android:orderInCategory="100"
         android:title="@string/action_settings"
         app:showAsAction="ifRoom"/>
+
 </menu>
