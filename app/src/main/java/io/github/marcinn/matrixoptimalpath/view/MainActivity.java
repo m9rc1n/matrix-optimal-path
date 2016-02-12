@@ -13,7 +13,7 @@ import android.view.inputmethod.InputMethodManager;
 
 import io.github.marcinn.matrixoptimalpath.R;
 import io.github.marcinn.matrixoptimalpath.lib.model.Cell;
-import io.github.marcinn.matrixoptimalpath.lib.strategy.Dijkstra;
+import io.github.marcinn.matrixoptimalpath.lib.strategy.DijkstraWithHeuristic;
 import io.github.marcinn.matrixoptimalpath.lib.strategy.MatrixOptimalPath;
 import io.github.marcinn.matrixoptimalpath.lib.util.MatrixHelper;
 import io.github.marcinn.matrixoptimalpath.model.WordCell;
@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity
             return;
         }
         Cell[] cells = new MatrixHelper().generateMatrixFromString(words, columnNumber);
-        cells = new MatrixOptimalPath(new Dijkstra()).execute(cells);
+        cells = new MatrixOptimalPath(new DijkstraWithHeuristic(25)).execute(cells);
         WordCell[] resultCells = new WordCell[cells.length];
         for (Cell c : cells) {
             resultCells[c.getIndex()] = new WordCell(words[c.getIndex()], c.getCost());

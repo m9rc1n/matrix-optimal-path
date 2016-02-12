@@ -95,4 +95,12 @@ public class Cell implements Comparable<Cell> {
     public int getIndex() {
         return index;
     }
+
+    public int getRow() {
+        return row;
+    }
+
+    public int getColumn() {
+        return column;
+    }
 }

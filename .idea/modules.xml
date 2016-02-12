@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/MatrixOptimalPath.iml" filepath="$PROJECT_DIR$/MatrixOptimalPath.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/matrix-optimal-path.iml" filepath="$PROJECT_DIR$/matrix-optimal-path.iml" />
       <module fileurl="file://$PROJECT_DIR$/matrix-optimal-path-lib/matrix-optimal-path-lib.iml" filepath="$PROJECT_DIR$/matrix-optimal-path-lib/matrix-optimal-path-lib.iml" />
     </modules>
   </component>
