@@ -49,7 +49,7 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ViewHolder> 
 
         public ViewHolder(View v) {
             super(v);
-            text = (TextView) v.findViewById(R.id.text);
+            text = (TextView) v.findViewById(R.id.textView_cellText);
             layout = (FrameLayout) v.findViewById(R.id.cell);
         }
     }

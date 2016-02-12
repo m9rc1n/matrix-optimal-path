@@ -33,6 +33,8 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar.setTitle("");
+        mToolbar.setLogo(R.drawable.logo);
         mRootView = findViewById(R.id.rootView);
         mTableFragment = TableFragment.newInstance();
         mPreferenceFragment = PreferenceFragment.newInstance();
@@ -63,11 +65,9 @@ public class MainActivity extends AppCompatActivity
             if (item.isChecked()) {
                 showPreferenceFragment();
                 item.setIcon(R.drawable.ic_grid_on_white_48dp);
-                mToolbar.setTitle("Preferences");
             } else {
                 hidePreferenceFragment();
                 item.setIcon(R.drawable.ic_settings_white_48dp);
-                mToolbar.setTitle(R.string.app_name);
             }
             return true;
         } else if (id == R.id.action_up_list) {
@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onPreferenceChanged(String text, int columnNumber) {
         if (text.equals("")) {
-            Snackbar.make(mRootView, "No words to display", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(mRootView, R.string.no_words_to_display, Snackbar.LENGTH_SHORT).show();
             return;
         }
         String[] words = text.toLowerCase().split("\\s+");
@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity
             }
             mTableFragment.updateAdapter(resultCells, path, columnNumber);
         } else {
-            Snackbar.make(mRootView, "No words to display", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(mRootView, R.string.no_words_to_display, Snackbar.LENGTH_SHORT).show();
         }
     }
 }

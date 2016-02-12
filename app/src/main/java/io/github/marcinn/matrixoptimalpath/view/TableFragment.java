@@ -32,8 +32,8 @@ public class TableFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle state) {
         View view = inflater.inflate(R.layout.fragment_table, container, false);
 
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
-        mTextView = (TextView) view.findViewById(R.id.textViewStatistics);
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView_table);
+        mTextView = (TextView) view.findViewById(R.id.textView_statistics);
 
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new GridLayoutManager(getContext(), 1);

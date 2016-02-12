@@ -29,9 +29,9 @@ public class PreferenceFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle state) {
         final View v = inflater.inflate(R.layout.fragment_preference, container, false);
-        final DiscreteSeekBar seekBar = ((DiscreteSeekBar) v.findViewById(R.id.seekBar));
-        final EditText editText = (EditText) v.findViewById(R.id.editText2);
-        final ImageButton imageButton = (ImageButton) v.findViewById(R.id.imageButton);
+        final DiscreteSeekBar seekBar = ((DiscreteSeekBar) v.findViewById(R.id.seekBar_columnsNumber));
+        final EditText editText = (EditText) v.findViewById(R.id.editText_inputTable);
+        final ImageButton imageButton = (ImageButton) v.findViewById(R.id.imageButton_appendText);
 
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
