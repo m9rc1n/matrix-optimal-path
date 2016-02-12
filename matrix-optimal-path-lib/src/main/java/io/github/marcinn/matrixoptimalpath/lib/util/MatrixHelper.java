@@ -12,9 +12,6 @@ public class MatrixHelper {
         if (columnNr <= 0) {
             throw new IllegalArgumentException("Column number should be bigger than zero");
         }
-        if (columnNr > words.length) {
-            throw new IllegalArgumentException("Column number should be less or equal words length");
-        }
         Cell[] cells = new Cell[words.length];
         for (int i = 0; i < words.length; i++) {
             cells[i] = new Cell(words[i].codePointAt(0), i, new MatrixInfo(words.length, columnNr));
