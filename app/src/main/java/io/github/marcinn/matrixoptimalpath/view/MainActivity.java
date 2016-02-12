@@ -85,11 +85,11 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void hidePreferenceFragment() {
-        hideKeyboard();
         getSupportFragmentManager().beginTransaction()
                 .setCustomAnimations(R.anim.slide_in_top, R.anim.slide_out_bottom)
                 .hide(mPreferenceFragment)
                 .commit();
+        hideKeyboard();
     }
 
     private void showPreferenceFragment() {
