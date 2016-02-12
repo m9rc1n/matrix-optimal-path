@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity
     private Toolbar mToolbar;
     private View mRootView;
     private PreferenceFragment mPreferenceFragment;
+    private MenuItem mMenuActionPreference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,37 +55,41 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        mMenuActionPreference = menu.findItem(R.id.action_preference);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_preference) {
-            item.setChecked(!item.isChecked());
-            if (item.isChecked()) {
-                showPreferenceFragment();
-                item.setIcon(R.drawable.ic_grid_on_white_48dp);
-            } else {
-                hidePreferenceFragment();
-                item.setIcon(R.drawable.ic_settings_white_48dp);
-            }
-            return true;
-        } else if (id == R.id.action_up_list) {
-            if (mTableFragment != null) {
-                mTableFragment.moveListToPosition(R.id.action_up_list);
-            }
-            return true;
-        } else if (id == R.id.action_down_list) {
-            if (mTableFragment != null) {
-                mTableFragment.moveListToPosition(R.id.action_down_list);
-            }
-            return true;
+        switch (id) {
+            case R.id.action_preference:
+                if (!item.isChecked()) {
+                    showPreferenceFragment();
+                } else {
+                    hidePreferenceFragment();
+                }
+                return true;
+            case R.id.action_up_list:
+            case R.id.action_down_list:
+                mTableFragment.moveListToPosition(id);
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed() {
+        if (mPreferenceFragment.isVisible()) {
+            hidePreferenceFragment();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
     private void hidePreferenceFragment() {
+        mMenuActionPreference.setChecked(!mMenuActionPreference.isChecked());
+        mMenuActionPreference.setIcon(R.drawable.ic_settings_white_48dp);
         getSupportFragmentManager().beginTransaction()
                 .setCustomAnimations(R.anim.slide_in_top, R.anim.slide_out_bottom)
                 .hide(mPreferenceFragment)
@@ -93,6 +98,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void showPreferenceFragment() {
+        mMenuActionPreference.setChecked(!mMenuActionPreference.isChecked());
+        mMenuActionPreference.setIcon(R.drawable.ic_grid_on_white_48dp);
         getSupportFragmentManager().beginTransaction()
                 .setCustomAnimations(R.anim.slide_in_bottom, R.anim.slide_out_top)
                 .show(mPreferenceFragment)
