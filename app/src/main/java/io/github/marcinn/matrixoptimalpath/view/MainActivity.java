@@ -61,11 +61,11 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.action_preference) {
             item.setChecked(!item.isChecked());
             if (item.isChecked()) {
-                hidePreferenceFragment();
+                showPreferenceFragment();
                 item.setIcon(R.drawable.ic_grid_on_white_48dp);
                 mToolbar.setTitle("Preferences");
             } else {
-                showPreferenceFragment();
+                hidePreferenceFragment();
                 item.setIcon(R.drawable.ic_settings_white_48dp);
                 mToolbar.setTitle(R.string.app_name);
             }
@@ -85,17 +85,17 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void hidePreferenceFragment() {
+        hideKeyboard();
         getSupportFragmentManager().beginTransaction()
                 .setCustomAnimations(R.anim.slide_in_top, R.anim.slide_out_bottom)
-                .show(mPreferenceFragment)
+                .hide(mPreferenceFragment)
                 .commit();
-        hideKeyboard();
     }
 
     private void showPreferenceFragment() {
         getSupportFragmentManager().beginTransaction()
                 .setCustomAnimations(R.anim.slide_in_bottom, R.anim.slide_out_top)
-                .hide(mPreferenceFragment)
+                .show(mPreferenceFragment)
                 .commit();
     }
 
