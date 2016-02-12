@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity
             Snackbar.make(mRootView, R.string.no_words_to_display, Snackbar.LENGTH_SHORT).show();
             return;
         }
-        String[] words = text.toLowerCase().split("\\s+");
+        String[] words = text.replaceAll("[^a-zA-Z ]", "").toLowerCase().split("\\s+");
         Cell[] cells = new MatrixHelper().generateMatrixFromString(words, columnNumber);
         cells = new MatrixOptimalPath(new Dijkstra()).execute(cells);
         WordCell[] resultCells = new WordCell[cells.length];
