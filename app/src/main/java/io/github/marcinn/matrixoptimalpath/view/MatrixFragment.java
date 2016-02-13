@@ -75,6 +75,11 @@ public class MatrixFragment extends Fragment {
         }
     }
 
+    public void resetView() {
+        mAdapter.setCalculationResult(null);
+        mTextView.setText(getResources().getText(R.string.you_can_add_new_words_in_settings));
+    }
+
     public interface OnFragmentInteractionListener {
     }
 }

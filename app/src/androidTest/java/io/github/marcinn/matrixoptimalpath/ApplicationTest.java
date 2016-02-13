@@ -119,7 +119,7 @@ public class ApplicationTest {
     @Test
     public void testWithAddTextButton() throws Exception {
         onView(withId(R.id.action_settings)).perform(click());
-        onView(withId(R.id.imageButton_appendText)).perform(click());
+        onView(withId(R.id.imageButton_generateText)).perform(click());
         onView(withId(R.id.seekBar_columnsNumber)).perform(setProgress(10));
 
         MatrixCell c0 = new MatrixCell("non", 232);
@@ -130,7 +130,7 @@ public class ApplicationTest {
         onView(withId(R.id.action_settings)).perform(click());
         onView(withId(R.id.action_settings)).perform(click());
 
-        onView(withId(R.id.imageButton_appendText)).perform(click());
+        onView(withId(R.id.imageButton_generateText)).perform(click());
         onView(withId(R.id.seekBar_columnsNumber)).perform(setProgress(20));
 
         MatrixCell c1 = new MatrixCell("non", 204);

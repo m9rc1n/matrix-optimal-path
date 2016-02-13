@@ -25,4 +25,6 @@ Fusce accumsan leo porta turpis semper ultrices. Integer eros massa, maximus vel
     <string name="generate_text_to_edit_view">Generate text to edit view</string>
     <string name="set_columns_number">Set columns number</string>
     <string name="prepare_data_for_matrix">Prepare data for matrix</string>
+    <string name="clipboard_is_empty">Clipboard is empty</string>
+    <string name="make_sure_that_you_are_pasting_text">Make sure that you are pasting text</string>
 </resources>

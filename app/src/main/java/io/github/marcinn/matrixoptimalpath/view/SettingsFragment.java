@@ -1,7 +1,10 @@
 package io.github.marcinn.matrixoptimalpath.view;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -21,7 +24,9 @@ public class SettingsFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private DiscreteSeekBar mSeekBar;
     private EditText mEditText;
-    private ImageButton mImageButton;
+    private ImageButton mGenerateTextButton;
+    private ImageButton mPasteButton;
+    private ImageButton mClearButton;
 
     public SettingsFragment() {
     }
@@ -35,12 +40,48 @@ public class SettingsFragment extends Fragment {
         final View v = inflater.inflate(R.layout.fragment_settings, container, false);
         mSeekBar = ((DiscreteSeekBar) v.findViewById(R.id.seekBar_columnsNumber));
         mEditText = (EditText) v.findViewById(R.id.editText_inputTable);
-        mImageButton = (ImageButton) v.findViewById(R.id.imageButton_appendText);
+        mGenerateTextButton = (ImageButton) v.findViewById(R.id.imageButton_generateText);
+        mPasteButton = (ImageButton) v.findViewById(R.id.imageButton_pasteText);
+        mClearButton = (ImageButton) v.findViewById(R.id.imageButton_clearText);
 
-        mImageButton.setOnClickListener(new View.OnClickListener() {
+        mGenerateTextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mEditText.append(getResources().getString(R.string.lorem_ipsum_1000));
+            }
+        });
+
+        mClearButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mEditText.setText("");
+                mListener.onResetMatrix();
+            }
+        });
+
+        mPasteButton.setOnClickListener(new View.OnClickListener() {
+            public static final String MIME_TYPE_TEXT_PLAIN = "text/plain";
+
+            @Override
+            public void onClick(View v) {
+                ClipboardManager clipboard = (ClipboardManager) getContext().getSystemService(
+                        Context.CLIPBOARD_SERVICE);
+                if (!(clipboard.hasPrimaryClip())) {
+                    if (getView() != null) {
+                        Snackbar.make(getView(), R.string.clipboard_is_empty, Snackbar.LENGTH_SHORT)
+                                .show();
+                    }
+                } else if (!(clipboard.getPrimaryClipDescription()
+                        .hasMimeType(MIME_TYPE_TEXT_PLAIN))) {
+                    if (getView() != null) {
+                        Snackbar.make(getView(),
+                                R.string.make_sure_that_you_are_pasting_text,
+                                Snackbar.LENGTH_SHORT).show();
+                    }
+                } else {
+                    ClipData.Item item = clipboard.getPrimaryClip().getItemAt(0);
+                    mEditText.append(" " + item.getText());
+                }
             }
         });
 
@@ -94,10 +135,14 @@ public class SettingsFragment extends Fragment {
     }
 
     public void setInputEnabled(boolean inputEnabled) {
-        mImageButton.setEnabled(inputEnabled);
+        mGenerateTextButton.setEnabled(inputEnabled);
+        mPasteButton.setEnabled(inputEnabled);
+        mClearButton.setEnabled(inputEnabled);
     }
 
     public interface OnFragmentInteractionListener {
         void onSettingsChanged(SettingsData data);
+
+        void onResetMatrix();
     }
 }

@@ -127,6 +127,11 @@ public class MainActivity extends AppCompatActivity
         new PathCalculationAsyncTask().execute(data);
     }
 
+    @Override
+    public void onResetMatrix() {
+        mMatrixFragment.resetView();
+    }
+
     private class PathCalculationAsyncTask
             extends AsyncTask<SettingsData, Void, CalculationResult> {
 
