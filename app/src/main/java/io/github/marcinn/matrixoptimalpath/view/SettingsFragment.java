@@ -14,33 +14,37 @@ import android.widget.ImageButton;
 import org.adw.library.widgets.discreteseekbar.DiscreteSeekBar;
 
 import io.github.marcinn.matrixoptimalpath.R;
+import io.github.marcinn.matrixoptimalpath.model.SettingsData;
 
-public class PreferenceFragment extends Fragment {
+public class SettingsFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
+    private DiscreteSeekBar mSeekBar;
+    private EditText mEditText;
+    private ImageButton mImageButton;
 
-    public PreferenceFragment() {
+    public SettingsFragment() {
     }
 
-    public static PreferenceFragment newInstance() {
-        return new PreferenceFragment();
+    public static SettingsFragment newInstance() {
+        return new SettingsFragment();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle state) {
         final View v = inflater.inflate(R.layout.fragment_preference, container, false);
-        final DiscreteSeekBar seekBar = ((DiscreteSeekBar) v.findViewById(R.id.seekBar_columnsNumber));
-        final EditText editText = (EditText) v.findViewById(R.id.editText_inputTable);
-        final ImageButton imageButton = (ImageButton) v.findViewById(R.id.imageButton_appendText);
+        mSeekBar = ((DiscreteSeekBar) v.findViewById(R.id.seekBar_columnsNumber));
+        mEditText = (EditText) v.findViewById(R.id.editText_inputTable);
+        mImageButton = (ImageButton) v.findViewById(R.id.imageButton_appendText);
 
-        imageButton.setOnClickListener(new View.OnClickListener() {
+        mImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editText.append(getResources().getString(R.string.lorem_ipsum_1000));
+                mEditText.append(getResources().getString(R.string.lorem_ipsum_1000));
             }
         });
 
-        editText.addTextChangedListener(new TextWatcher() {
+        mEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
@@ -51,14 +55,15 @@ public class PreferenceFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                mListener.onPreferenceChanged(s.toString(), seekBar.getProgress());
+                mListener.onSettingsChanged(new SettingsData(s.toString(), mSeekBar.getProgress()));
             }
         });
 
-        seekBar.setOnProgressChangeListener(new DiscreteSeekBar.OnProgressChangeListener() {
+        mSeekBar.setOnProgressChangeListener(new DiscreteSeekBar.OnProgressChangeListener() {
             @Override
             public void onProgressChanged(DiscreteSeekBar seekBar, int value, boolean fromUser) {
-                mListener.onPreferenceChanged(editText.getText().toString(), value);
+                mListener.onSettingsChanged(new SettingsData(mEditText.getText().toString(),
+                        value));
             }
 
             @Override
@@ -88,7 +93,12 @@ public class PreferenceFragment extends Fragment {
         mListener = null;
     }
 
+    public void setInputEnabled(boolean inputEnabled) {
+        mSeekBar.setEnabled(inputEnabled);
+        mImageButton.setEnabled(inputEnabled);
+    }
+
     public interface OnFragmentInteractionListener {
-        void onPreferenceChanged(String text, int columnNumber);
+        void onSettingsChanged(SettingsData data);
     }
 }

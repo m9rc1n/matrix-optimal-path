@@ -17,7 +17,8 @@ Fusce accumsan leo porta turpis semper ultrices. Integer eros massa, maximus vel
     <string name="no_words_to_display">No words to display</string>
     <string name="preferences">Preferences</string>
     <string name="you_can_add_new_words_in_preferences">You can add new words in Preferences</string>
-    <string name="enter_text_to_display_in_table">Enter text to display in table</string>
+    <string name="enter_text_to_display_in_table">Enter words to display in table</string>
     <string name="columns_number">Columns number</string>
     <string name="please_enter_only_ascii_letters">Please enter only ASCII letters</string>
+    <string name="words_in_matrix_cost_of_optimal_path" formatted="false">Words in matrix: %d \nCost of optimal path: %d</string>
 </resources>

@@ -20,9 +20,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import io.github.marcinn.matrixoptimalpath.model.WordCell;
+import io.github.marcinn.matrixoptimalpath.model.MatrixCell;
 import io.github.marcinn.matrixoptimalpath.view.MainActivity;
-import io.github.marcinn.matrixoptimalpath.view.TableAdapter;
+import io.github.marcinn.matrixoptimalpath.view.MatrixAdapter;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -72,19 +72,19 @@ public class ApplicationTest {
         checkIfKeyboardIsClosed();
         checkTableFragmentMatching(matches(isDisplayed()));
 
-        onView(withId(R.id.action_preference)).perform(click());
+        onView(withId(R.id.action_settings)).perform(click());
         checkPreferenceFragmentMatching(matches(isDisplayed()));
         checkTableFragmentMatching(matches(isDisplayed()));
 
-        onView(withId(R.id.action_preference)).perform(click());
+        onView(withId(R.id.action_settings)).perform(click());
         checkIfKeyboardIsClosed();
         checkPreferenceFragmentMatching(matches(not(isDisplayed())));
         checkIfKeyboardIsClosed();
         checkTableFragmentMatching(matches(isDisplayed()));
 
-        onView(withId(R.id.action_preference)).perform(click());
+        onView(withId(R.id.action_settings)).perform(click());
 
-        onView(withId(R.id.action_preference)).perform(click());
+        onView(withId(R.id.action_settings)).perform(click());
         checkPreferenceFragmentMatching(matches(not(isDisplayed())));
         checkIfKeyboardIsClosed();
         checkTableFragmentMatching(matches(isDisplayed()));
@@ -92,50 +92,50 @@ public class ApplicationTest {
 
     @Test
     public void testIfRecyclerViewIsFilledProperly() throws Exception {
-        onView(withId(R.id.action_preference)).perform(click());
+        onView(withId(R.id.action_settings)).perform(click());
         onView(withId(R.id.editText_inputTable)).perform(click()).perform(typeText("a b c d e"));
-        WordCell c0 = new WordCell("a", 0);
-        WordCell c1 = new WordCell("b", 1);
-        WordCell c2 = new WordCell("c", 2);
-        WordCell c3 = new WordCell("d", 3);
-        WordCell c4 = new WordCell("e", 4);
-        onView((withId(R.id.recyclerView_table))).perform(scrollToHolder(new TableViewHolderMatcher())
+        MatrixCell c0 = new MatrixCell("a", 0);
+        MatrixCell c1 = new MatrixCell("b", 1);
+        MatrixCell c2 = new MatrixCell("c", 2);
+        MatrixCell c3 = new MatrixCell("d", 3);
+        MatrixCell c4 = new MatrixCell("e", 4);
+        onView((withId(R.id.recyclerView_matrix))).perform(scrollToHolder(new TableViewHolderMatcher())
                 .atPosition(0));
         onView(withText(c0.toString())).check(matches(isDisplayed()));
-        onView((withId(R.id.recyclerView_table))).perform(scrollToHolder(new TableViewHolderMatcher())
+        onView((withId(R.id.recyclerView_matrix))).perform(scrollToHolder(new TableViewHolderMatcher())
                 .atPosition(1));
         onView(withText(c1.toString())).check(matches(isDisplayed()));
-        onView((withId(R.id.recyclerView_table))).perform(scrollToHolder(new TableViewHolderMatcher())
+        onView((withId(R.id.recyclerView_matrix))).perform(scrollToHolder(new TableViewHolderMatcher())
                 .atPosition(2));
         onView(withText(c2.toString())).check(matches(isDisplayed()));
-        onView((withId(R.id.recyclerView_table))).perform(scrollToHolder(new TableViewHolderMatcher())
+        onView((withId(R.id.recyclerView_matrix))).perform(scrollToHolder(new TableViewHolderMatcher())
                 .atPosition(3));
         onView(withText(c3.toString())).check(matches(isDisplayed()));
-        onView((withId(R.id.recyclerView_table))).perform(scrollToHolder(new TableViewHolderMatcher())
+        onView((withId(R.id.recyclerView_matrix))).perform(scrollToHolder(new TableViewHolderMatcher())
                 .atPosition(4));
         onView(withText(c4.toString())).check(matches(isDisplayed()));
     }
 
     @Test
     public void testWithAddTextButton() throws Exception {
-        onView(withId(R.id.action_preference)).perform(click());
+        onView(withId(R.id.action_settings)).perform(click());
         onView(withId(R.id.imageButton_appendText)).perform(click());
         onView(withId(R.id.seekBar_columnsNumber)).perform(setProgress(10));
 
-        WordCell c0 = new WordCell("non", 232);
+        MatrixCell c0 = new MatrixCell("non", 232);
         onView(withItemText(c0.toString())).check(doesNotExist());
-        onView((withId(R.id.recyclerView_table))).perform(scrollToPosition(999));
+        onView((withId(R.id.recyclerView_matrix))).perform(scrollToPosition(999));
         onView(withItemText(c0.toString())).check(matches(isDisplayed()));
 
-        onView(withId(R.id.action_preference)).perform(click());
-        onView(withId(R.id.action_preference)).perform(click());
+        onView(withId(R.id.action_settings)).perform(click());
+        onView(withId(R.id.action_settings)).perform(click());
 
         onView(withId(R.id.imageButton_appendText)).perform(click());
         onView(withId(R.id.seekBar_columnsNumber)).perform(setProgress(20));
 
-        WordCell c1 = new WordCell("non", 204);
+        MatrixCell c1 = new MatrixCell("non", 204);
         onView(withItemText(c1.toString())).check(doesNotExist());
-        onView((withId(R.id.recyclerView_table))).perform(scrollToPosition(1999));
+        onView((withId(R.id.recyclerView_matrix))).perform(scrollToPosition(1999));
         onView(withItemText(c1.toString())).check(matches(isDisplayed()));
 
     }
@@ -153,7 +153,7 @@ public class ApplicationTest {
 
     private void checkTableFragmentMatching(ViewAssertion matches) throws Exception {
         onView(withId(R.id.textView_statistics)).check(matches);
-        onView(withId(R.id.recyclerView_table)).check(matches);
+        onView(withId(R.id.recyclerView_matrix)).check(matches);
     }
 
     private Matcher<View> withItemText(final String itemText) {
@@ -161,7 +161,8 @@ public class ApplicationTest {
         return new TypeSafeMatcher<View>() {
             @Override
             public boolean matchesSafely(View item) {
-                return allOf(isDescendantOfA(withId(R.id.recyclerView_table)), withText(itemText)).matches(item);
+                return allOf(isDescendantOfA(withId(R.id.recyclerView_matrix)),
+                        withText(itemText)).matches(item);
             }
 
             @Override
@@ -171,7 +172,7 @@ public class ApplicationTest {
         };
     }
 
-    private static class TableViewHolderMatcher extends TypeSafeMatcher<TableAdapter.ViewHolder> {
+    private static class TableViewHolderMatcher extends TypeSafeMatcher<MatrixAdapter.ViewHolder> {
         private Matcher<View> itemMatcher = any(View.class);
 
         public TableViewHolderMatcher() { }
@@ -181,8 +182,8 @@ public class ApplicationTest {
         }
 
         @Override
-        public boolean matchesSafely(TableAdapter.ViewHolder viewHolder) {
-            return TableAdapter.ViewHolder.class.isAssignableFrom(viewHolder.getClass())
+        public boolean matchesSafely(MatrixAdapter.ViewHolder viewHolder) {
+            return MatrixAdapter.ViewHolder.class.isAssignableFrom(viewHolder.getClass())
                     && itemMatcher.matches(viewHolder.text);
         }
 

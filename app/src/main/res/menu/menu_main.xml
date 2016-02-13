@@ -4,7 +4,7 @@
       tools:context=".view.MainActivity">
 
     <item
-        android:id="@+id/action_up_list"
+        android:id="@+id/action_matrix_to_top"
         android:checkable="true"
         android:icon="@drawable/ic_arrow_upward_white_48dp"
         android:orderInCategory="98"
@@ -12,7 +12,7 @@
         app:showAsAction="ifRoom"/>
 
     <item
-        android:id="@+id/action_down_list"
+        android:id="@+id/action_matrix_to_bottom"
         android:checkable="true"
         android:icon="@drawable/ic_arrow_downward_white_48dp"
         android:orderInCategory="99"
@@ -20,7 +20,7 @@
         app:showAsAction="ifRoom"/>
 
     <item
-        android:id="@+id/action_preference"
+        android:id="@+id/action_settings"
         android:checkable="true"
         android:icon="@drawable/ic_settings_white_48dp"
         android:orderInCategory="100"

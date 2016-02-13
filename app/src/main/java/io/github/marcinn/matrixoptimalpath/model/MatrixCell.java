@@ -3,26 +3,26 @@ package io.github.marcinn.matrixoptimalpath.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class WordCell implements Parcelable {
+public class MatrixCell implements Parcelable {
 
     public static final Creator CREATOR = new Creator() {
-        public WordCell createFromParcel(Parcel in) {
-            return new WordCell(in);
+        public MatrixCell createFromParcel(Parcel in) {
+            return new MatrixCell(in);
         }
 
-        public WordCell[] newArray(int size) {
-            return new WordCell[size];
+        public MatrixCell[] newArray(int size) {
+            return new MatrixCell[size];
         }
     };
     private final String text;
     private final int cost;
 
-    public WordCell(String text, int cost) {
+    public MatrixCell(String text, int cost) {
         this.text = text;
         this.cost = cost;
     }
 
-    private WordCell(Parcel in) {
+    private MatrixCell(Parcel in) {
         this.cost = in.readInt();
         this.text = in.readString();
     }

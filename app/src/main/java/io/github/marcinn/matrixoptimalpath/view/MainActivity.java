@@ -1,7 +1,9 @@
 package io.github.marcinn.matrixoptimalpath.view;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -16,46 +18,48 @@ import io.github.marcinn.matrixoptimalpath.lib.model.Cell;
 import io.github.marcinn.matrixoptimalpath.lib.strategy.Dijkstra;
 import io.github.marcinn.matrixoptimalpath.lib.strategy.MatrixOptimalPath;
 import io.github.marcinn.matrixoptimalpath.lib.util.MatrixHelper;
-import io.github.marcinn.matrixoptimalpath.model.WordCell;
+import io.github.marcinn.matrixoptimalpath.model.CalculationResult;
+import io.github.marcinn.matrixoptimalpath.model.CalculationResultError;
+import io.github.marcinn.matrixoptimalpath.model.MatrixCell;
+import io.github.marcinn.matrixoptimalpath.model.SettingsData;
 
 public class MainActivity extends AppCompatActivity
-        implements PreferenceFragment.OnFragmentInteractionListener,
-        TableFragment.OnFragmentInteractionListener {
+        implements SettingsFragment.OnFragmentInteractionListener,
+        MatrixFragment.OnFragmentInteractionListener {
 
-    private TableFragment mTableFragment;
-    private Toolbar mToolbar;
+    private static final String STRING_EMPTY = "";
+    private MatrixFragment mMatrixFragment;
     private View mRootView;
-    private PreferenceFragment mPreferenceFragment;
-    private MenuItem mMenuActionPreference;
+    private SettingsFragment mSettingsFragment;
+    private MenuItem mMenuActionSettings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle("");
-        mToolbar.setLogo(R.drawable.logo);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(STRING_EMPTY);
+        toolbar.setLogo(R.drawable.logo);
         mRootView = findViewById(R.id.rootView);
-        mTableFragment = TableFragment.newInstance();
-        mPreferenceFragment = PreferenceFragment.newInstance();
+        mMatrixFragment = MatrixFragment.newInstance();
+        mSettingsFragment = SettingsFragment.newInstance();
 
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.content_main, mTableFragment)
+        getSupportFragmentManager().beginTransaction().add(R.id.content_main, mMatrixFragment)
                 .commit();
 
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.content_main, mPreferenceFragment)
-                .hide(mPreferenceFragment)
+                .add(R.id.content_main, mSettingsFragment)
+                .hide(mSettingsFragment)
                 .commit();
 
-        setSupportActionBar(mToolbar);
+        setSupportActionBar(toolbar);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        mMenuActionPreference = menu.findItem(R.id.action_preference);
+        mMenuActionSettings = menu.findItem(R.id.action_settings);
         return true;
     }
 
@@ -63,16 +67,16 @@ public class MainActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
-            case R.id.action_preference:
+            case R.id.action_settings:
                 if (!item.isChecked()) {
-                    showPreferenceFragment();
+                    showSettingsFragment();
                 } else {
-                    hidePreferenceFragment();
+                    hideSettingsFragment();
                 }
                 return true;
-            case R.id.action_up_list:
-            case R.id.action_down_list:
-                mTableFragment.moveListToPosition(id);
+            case R.id.action_matrix_to_top:
+            case R.id.action_matrix_to_bottom:
+                mMatrixFragment.moveListToPosition(id);
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -80,29 +84,29 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        if (mPreferenceFragment.isVisible()) {
-            hidePreferenceFragment();
+        if (mSettingsFragment.isVisible()) {
+            hideSettingsFragment();
         } else {
             super.onBackPressed();
         }
     }
 
-    private void hidePreferenceFragment() {
-        mMenuActionPreference.setChecked(!mMenuActionPreference.isChecked());
-        mMenuActionPreference.setIcon(R.drawable.ic_settings_white_48dp);
+    private void hideSettingsFragment() {
+        mMenuActionSettings.setChecked(!mMenuActionSettings.isChecked());
+        mMenuActionSettings.setIcon(R.drawable.ic_settings_white_48dp);
         getSupportFragmentManager().beginTransaction()
                 .setCustomAnimations(R.anim.slide_in_top, R.anim.slide_out_bottom)
-                .hide(mPreferenceFragment)
+                .hide(mSettingsFragment)
                 .commit();
         hideKeyboard();
     }
 
-    private void showPreferenceFragment() {
-        mMenuActionPreference.setChecked(!mMenuActionPreference.isChecked());
-        mMenuActionPreference.setIcon(R.drawable.ic_grid_on_white_48dp);
+    private void showSettingsFragment() {
+        mMenuActionSettings.setChecked(!mMenuActionSettings.isChecked());
+        mMenuActionSettings.setIcon(R.drawable.ic_grid_on_white_48dp);
         getSupportFragmentManager().beginTransaction()
                 .setCustomAnimations(R.anim.slide_in_bottom, R.anim.slide_out_top)
-                .show(mPreferenceFragment)
+                .show(mSettingsFragment)
                 .commit();
     }
 
@@ -115,35 +119,76 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onPreferenceChanged(String text, int columnNumber) {
-        if (text == null || text.equals("")) {
+    public void onSettingsChanged(SettingsData data) {
+        if (data.getText() == null || data.getText().equals(STRING_EMPTY)) {
             Snackbar.make(mRootView, R.string.no_words_to_display, Snackbar.LENGTH_SHORT).show();
             return;
         }
-        String[] words = text.replaceAll("[^a-zA-Z ]", "").toLowerCase().trim().split("\\s+");
-        if (words.length == 0 || (words.length == 1 && (words[0] == null || words[0].equals("")))) {
-            Snackbar.make(mRootView,
-                    R.string.please_enter_only_ascii_letters,
-                    Snackbar.LENGTH_SHORT).show();
-            return;
+        new PathCalculationAsyncTask().execute(data);
+    }
+
+    private class PathCalculationAsyncTask
+            extends AsyncTask<SettingsData, Void, CalculationResult> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            mSettingsFragment.setInputEnabled(false);
         }
-        Cell[] cells = new MatrixHelper().generateMatrixFromString(words, columnNumber);
-        cells = new MatrixOptimalPath(new Dijkstra()).execute(cells);
-        WordCell[] resultCells = new WordCell[cells.length];
-        for (Cell c : cells) {
-            resultCells[c.getIndex()] = new WordCell(words[c.getIndex()], c.getCost());
+
+        protected CalculationResult doInBackground(SettingsData... params) {
+            SettingsData data = params[0];
+            // Split text by spaces and filter non-ASCII and non letters characters
+            String[] words = data.getText()
+                    .replaceAll("[^a-zA-Z ]", STRING_EMPTY)
+                    .toLowerCase()
+                    .trim()
+                    .split("\\s+");
+            if (isFilledWthEmptyStrings(words)) {
+                return new CalculationResultError(R.string.please_enter_only_ascii_letters);
+            }
+            // Prepare data for searching algorithm and execute
+            Cell[] cells = new MatrixHelper().generateMatrixFromString(words,
+                    data.getColumnNumber());
+            cells = new MatrixOptimalPath(new Dijkstra()).execute(cells);
+
+            // Extract result data
+            MatrixCell[] resultCells = new MatrixCell[cells.length];
+            for (Cell c : cells) {
+                resultCells[c.getIndex()] = new MatrixCell(words[c.getIndex()], c.getCost());
+            }
+            if (resultCells.length > 0) {
+                SparseBooleanArray path = extractPathFromData(cells[cells.length - 1]);
+                return new CalculationResult(data.getColumnNumber(), resultCells, path);
+            } else {
+                return new CalculationResultError(R.string.no_words_to_display);
+            }
         }
-        if (resultCells.length > 0) {
+
+        @NonNull
+        private SparseBooleanArray extractPathFromData(Cell cell) {
             SparseBooleanArray path = new SparseBooleanArray();
-            Cell cell = cells[cells.length - 1];
             path.append(cell.getIndex(), true);
             while (cell.getIndex() != 0) {
                 cell = cell.getPrevious();
                 path.append(cell.getIndex(), true);
             }
-            mTableFragment.updateAdapter(resultCells, path, columnNumber);
-        } else {
-            Snackbar.make(mRootView, R.string.no_words_to_display, Snackbar.LENGTH_SHORT).show();
+            return path;
+        }
+
+        private boolean isFilledWthEmptyStrings(String[] words) {
+            return words.length == 0 || (words.length == 1 && (words[0] == null || words[0].equals(
+                    STRING_EMPTY)));
+        }
+
+        protected void onPostExecute(CalculationResult result) {
+            if (result instanceof CalculationResultError) {
+                int resId = ((CalculationResultError) result).getMessageResId();
+                Snackbar.make(mRootView, resId, Snackbar.LENGTH_SHORT).show();
+            } else {
+                mMatrixFragment.updateAdapter(result);
+            }
+            mSettingsFragment.setInputEnabled(true);
         }
     }
 }
