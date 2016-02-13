@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.test.espresso.UiController;
 import android.support.test.espresso.ViewAction;
 import android.support.test.espresso.ViewAssertion;
+import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -27,7 +28,6 @@ import io.github.marcinn.matrixoptimalpath.view.MatrixAdapter;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.typeText;
-import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.contrib.RecyclerViewActions.scrollToHolder;
 import static android.support.test.espresso.contrib.RecyclerViewActions.scrollToPosition;
@@ -44,8 +44,7 @@ import static org.hamcrest.Matchers.not;
 public class ApplicationTest {
 
     @Rule
-    public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<>(
-            MainActivity.class);
+    public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<>(MainActivity.class);
 
     public static ViewAction setProgress(final int progress) {
         return new ViewAction() {
@@ -99,20 +98,16 @@ public class ApplicationTest {
         MatrixCell c2 = new MatrixCell("c", 2);
         MatrixCell c3 = new MatrixCell("d", 3);
         MatrixCell c4 = new MatrixCell("e", 4);
-        onView((withId(R.id.recyclerView_matrix))).perform(scrollToHolder(new TableViewHolderMatcher())
-                .atPosition(0));
-        onView(withText(c0.toString())).check(matches(isDisplayed()));
-        onView((withId(R.id.recyclerView_matrix))).perform(scrollToHolder(new TableViewHolderMatcher())
-                .atPosition(1));
-        onView(withText(c1.toString())).check(matches(isDisplayed()));
-        onView((withId(R.id.recyclerView_matrix))).perform(scrollToHolder(new TableViewHolderMatcher())
-                .atPosition(2));
-        onView(withText(c2.toString())).check(matches(isDisplayed()));
-        onView((withId(R.id.recyclerView_matrix))).perform(scrollToHolder(new TableViewHolderMatcher())
-                .atPosition(3));
-        onView(withText(c3.toString())).check(matches(isDisplayed()));
-        onView((withId(R.id.recyclerView_matrix))).perform(scrollToHolder(new TableViewHolderMatcher())
-                .atPosition(4));
+        isWordCellVisible(c0, scrollToHolder(new TableViewHolderMatcher()).atPosition(0));
+        isWordCellVisible(c1, scrollToHolder(new TableViewHolderMatcher()).atPosition(1));
+        isWordCellVisible(c2, scrollToHolder(new TableViewHolderMatcher()).atPosition(2));
+        isWordCellVisible(c3, scrollToHolder(new TableViewHolderMatcher()).atPosition(3));
+        isWordCellVisible(c4, scrollToHolder(new TableViewHolderMatcher()).atPosition(4));
+    }
+
+    private void isWordCellVisible(MatrixCell c4,
+                                   RecyclerViewActions.PositionableRecyclerViewAction positionableRecyclerViewAction) {
+        onView((withId(R.id.recyclerView_matrix))).perform(positionableRecyclerViewAction);
         onView(withText(c4.toString())).check(matches(isDisplayed()));
     }
 
@@ -121,22 +116,23 @@ public class ApplicationTest {
         onView(withId(R.id.action_settings)).perform(click());
         onView(withId(R.id.imageButton_generateText)).perform(click());
         onView(withId(R.id.seekBar_columnsNumber)).perform(setProgress(10));
-
-        MatrixCell c0 = new MatrixCell("non", 232);
-        onView(withItemText(c0.toString())).check(doesNotExist());
+        onView(withId(R.id.action_settings)).perform(click());
+        MatrixCell c0 = new MatrixCell("etiam", 223);
+        MatrixCell c1 = new MatrixCell("gravida", 229);
         onView((withId(R.id.recyclerView_matrix))).perform(scrollToPosition(999));
-        onView(withItemText(c0.toString())).check(matches(isDisplayed()));
-
+        isWordCellVisible(c0, scrollToHolder(new TableViewHolderMatcher()).atPosition(989));
+        isWordCellVisible(c1, scrollToHolder(new TableViewHolderMatcher()).atPosition(990));
         onView(withId(R.id.action_settings)).perform(click());
-        onView(withId(R.id.action_settings)).perform(click());
-
         onView(withId(R.id.imageButton_generateText)).perform(click());
         onView(withId(R.id.seekBar_columnsNumber)).perform(setProgress(20));
-
-        MatrixCell c1 = new MatrixCell("non", 204);
-        onView(withItemText(c1.toString())).check(doesNotExist());
+        onView(withId(R.id.action_settings)).perform(click());
+        onView(withId(R.id.action_settings)).perform(click());
+        onView(withId(R.id.action_settings)).perform(click());
+        c0 = new MatrixCell("sed", 199);
+        c1 = new MatrixCell("dignissim", 204);
         onView((withId(R.id.recyclerView_matrix))).perform(scrollToPosition(1999));
-        onView(withItemText(c1.toString())).check(matches(isDisplayed()));
+        isWordCellVisible(c0, scrollToHolder(new TableViewHolderMatcher()).atPosition(1979));
+        isWordCellVisible(c1, scrollToHolder(new TableViewHolderMatcher()).atPosition(1980));
 
     }
 
@@ -175,7 +171,8 @@ public class ApplicationTest {
     private static class TableViewHolderMatcher extends TypeSafeMatcher<MatrixAdapter.ViewHolder> {
         private Matcher<View> itemMatcher = any(View.class);
 
-        public TableViewHolderMatcher() { }
+        public TableViewHolderMatcher() {
+        }
 
         public TableViewHolderMatcher(Matcher<View> itemMatcher) {
             this.itemMatcher = itemMatcher;
@@ -183,8 +180,8 @@ public class ApplicationTest {
 
         @Override
         public boolean matchesSafely(MatrixAdapter.ViewHolder viewHolder) {
-            return MatrixAdapter.ViewHolder.class.isAssignableFrom(viewHolder.getClass())
-                    && itemMatcher.matches(viewHolder.text);
+            return MatrixAdapter.ViewHolder.class.isAssignableFrom(viewHolder.getClass()) && itemMatcher
+                    .matches(viewHolder.text);
         }
 
         @Override
