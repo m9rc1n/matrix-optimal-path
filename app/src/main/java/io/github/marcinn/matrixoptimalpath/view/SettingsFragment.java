@@ -32,7 +32,7 @@ public class SettingsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle state) {
-        final View v = inflater.inflate(R.layout.fragment_preference, container, false);
+        final View v = inflater.inflate(R.layout.fragment_settings, container, false);
         mSeekBar = ((DiscreteSeekBar) v.findViewById(R.id.seekBar_columnsNumber));
         mEditText = (EditText) v.findViewById(R.id.editText_inputTable);
         mImageButton = (ImageButton) v.findViewById(R.id.imageButton_appendText);
@@ -94,7 +94,6 @@ public class SettingsFragment extends Fragment {
     }
 
     public void setInputEnabled(boolean inputEnabled) {
-        mSeekBar.setEnabled(inputEnabled);
         mImageButton.setEnabled(inputEnabled);
     }
 

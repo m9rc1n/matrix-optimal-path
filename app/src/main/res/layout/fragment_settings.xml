@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:alpha="0.7"
-    android:background="#aeaeae"
-    android:orientation="vertical"
-    android:paddingBottom="16dp"
-    android:paddingLeft="24dp"
-    android:paddingRight="24dp"
-    android:paddingTop="16dp">
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:alpha="0.7"
+                android:background="#aeaeae"
+                android:orientation="vertical"
+                android:paddingBottom="16dp"
+                android:paddingLeft="24dp"
+                android:paddingRight="24dp"
+                android:paddingTop="16dp">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -26,7 +26,7 @@
             android:layout_alignParentStart="true"
             android:layout_below="@+id/imageButton_appendText"
             android:layout_gravity="center_horizontal|top"
-            android:background="@android:color/background_light"
+            android:background="@drawable/edit_text_border"
             android:elegantTextHeight="true"
             android:hint="@string/enter_text_to_display_in_table"
             android:inputType="textMultiLine"
@@ -36,18 +36,28 @@
             android:id="@+id/imageButton_appendText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/textView"
+            android:layout_toLeftOf="@+id/imageButton_pasteText"
+            android:layout_toStartOf="@+id/imageButton_pasteText"
+            android:contentDescription="@string/generate_text_to_edit_view"
+            android:src="@drawable/ic_note_add_black_36dp"/>
+
+        <ImageButton
+            android:id="@+id/imageButton_pasteText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/editText_inputTable"
             android:layout_alignEnd="@+id/editText_inputTable"
-            android:layout_alignParentTop="true"
             android:layout_alignRight="@+id/editText_inputTable"
-            android:src="@drawable/ic_note_add_black_48dp" />
+            android:contentDescription="@string/paste_text_to_edit_view"
+            android:src="@drawable/ic_content_paste_black_36dp"/>
 
         <FrameLayout
+            android:id="@+id/frameLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/editText_inputTable"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
+            android:layout_alignTop="@+id/imageButton_appendText"
             android:layout_toLeftOf="@+id/imageButton_appendText"
             android:layout_toStartOf="@+id/imageButton_appendText">
 
@@ -63,17 +73,30 @@
                 android:layout_gravity="center"
                 android:layout_toLeftOf="@+id/imageButton_appendText"
                 android:layout_toStartOf="@+id/imageButton_appendText"
-                app:dsb_indicatorColor="@color/colorAccent"
+                android:contentDescription="@string/set_columns_number"
+                app:dsb_indicatorColor="@color/colorAccentLessTransparent"
                 app:dsb_indicatorFormatter="Columns: %d"
                 app:dsb_max="30"
                 app:dsb_min="1"
                 app:dsb_progressColor="@color/colorPrimary"
-                app:dsb_scrubberHeight="6dp"
-                app:dsb_thumbSize="28dp"
-                app:dsb_trackColor="@color/colorAccent"
-                app:dsb_trackHeight="4dp"
+                app:dsb_scrubberHeight="4dp"
+                app:dsb_thumbSize="18dp"
+                app:dsb_trackColor="#3e3e3e"
+                app:dsb_trackHeight="2dp"
                 app:dsb_value="5"/>
         </FrameLayout>
 
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/editText_inputTable"
+            android:layout_alignParentTop="true"
+            android:layout_alignRight="@+id/editText_inputTable"
+            android:gravity="center"
+            android:text="@string/prepare_data_for_matrix"
+            android:textAppearance="?android:attr/textAppearanceLarge"/>
+
     </RelativeLayout>
+
 </RelativeLayout>

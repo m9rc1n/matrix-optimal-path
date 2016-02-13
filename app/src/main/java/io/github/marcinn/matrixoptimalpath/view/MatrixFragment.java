@@ -28,7 +28,7 @@ public class MatrixFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle state) {
-        View view = inflater.inflate(R.layout.fragment_table, container, false);
+        View view = inflater.inflate(R.layout.fragment_matrix, container, false);
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView_matrix);
         mTextView = (TextView) view.findViewById(R.id.textView_statistics);
         recyclerView.setHasFixedSize(true);
