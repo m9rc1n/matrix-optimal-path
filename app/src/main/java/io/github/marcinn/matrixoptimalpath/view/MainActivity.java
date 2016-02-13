@@ -15,7 +15,7 @@ import android.view.inputmethod.InputMethodManager;
 
 import io.github.marcinn.matrixoptimalpath.R;
 import io.github.marcinn.matrixoptimalpath.lib.model.Cell;
-import io.github.marcinn.matrixoptimalpath.lib.strategy.DijkstraWithHeuristic;
+import io.github.marcinn.matrixoptimalpath.lib.strategy.AStar;
 import io.github.marcinn.matrixoptimalpath.lib.strategy.MatrixOptimalPath;
 import io.github.marcinn.matrixoptimalpath.lib.util.MatrixHelper;
 import io.github.marcinn.matrixoptimalpath.model.CalculationResult;
@@ -155,7 +155,8 @@ public class MainActivity extends AppCompatActivity
             // Prepare data for searching algorithm and execute
             Cell[] cells = new MatrixHelper().generateMatrixFromString(words,
                     data.getColumnNumber());
-            cells = new MatrixOptimalPath(new DijkstraWithHeuristic(25)).execute(cells);
+            int maxDistanceBetweenCells = 'z' - 'a';
+            cells = new MatrixOptimalPath(new AStar(maxDistanceBetweenCells)).execute(cells);
 
             // Extract result data
             MatrixCell[] resultCells = new MatrixCell[cells.length];
